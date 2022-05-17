@@ -1,0 +1,12 @@
+.myInput{
+    position: absolute;
+    bottom: 0%;
+}
+
+.myMenu{
+    inline-size: min-content;
+}
+
+.myDropDown{
+    min-width: auto;
+}

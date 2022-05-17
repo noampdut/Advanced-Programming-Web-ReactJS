@@ -1,0 +1,12 @@
+.ChattingPage{
+    top: 20%;
+    left: 37%;
+    align-items: center;
+    padding: 40px;
+    border-radius: 8px;
+    color: black;
+    font-style:italic;
+    background-color:transparent;
+    font-family: 'system-ui';
+    box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+}

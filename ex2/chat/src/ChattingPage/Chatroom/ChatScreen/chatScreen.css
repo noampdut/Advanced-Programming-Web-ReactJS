@@ -1,0 +1,21 @@
+.chatBackground{
+    background-color: rgb(252, 255, 255);
+    text-align: center;
+    position: absolute;
+    top: 5%;
+    left: 42.94%;
+    width: 100vh;
+    height: 88.5vh;
+    margin: 0%;
+    font-family: 'system-ui';
+    box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+    background-position: center;
+}
+.mylist{
+    position: absolute;
+    top: 5%;
+    width: 64vh;
+    height: 90vh;
+    left: 13%;
+}
+

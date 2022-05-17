@@ -1,0 +1,18 @@
+.popup{
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    width: 300px;
+    height: 135px;
+    background-color: pink;
+    font-weight: 600;
+}
+.popup-inner{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.myClose{
+    position: absolute;
+    right: 0%;
+}

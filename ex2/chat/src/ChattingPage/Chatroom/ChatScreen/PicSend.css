@@ -1,0 +1,12 @@
+.myPic{
+    position: relative;
+    width: 50%;
+    height: 30%;
+    size: 10%;
+    right: -26%;
+}
+.sendPic{
+    padding: 0px;
+    height: 30%;
+    margin-left: auto;
+}
