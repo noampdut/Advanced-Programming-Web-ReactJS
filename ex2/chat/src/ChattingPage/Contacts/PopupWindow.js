@@ -2,45 +2,35 @@ import './PopupWindow.css';
 
 function Popup(props) {
 
-    const onChange = e => 
-    {
-        
-        props.onchange(e);
-        
-    };
+    const onChange = e => {};
     const onSubmit = e =>
     {
         const userName = document.getElementById("userName").value;
+        const server = document.getElementById("server").value;
+        const nickName = document.getElementById("nickName").value;
+
         e.preventDefault();
-        fetch('https://localhost:5001/api/contacts?id=' + userName + '&name=' + userName +'&server=1234',
+        fetch('https://localhost:5001/api/contacts?id=' + userName + '&name=' + nickName + '&server=' + server,
             {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify({
                     id: userName,
-                    name: userName,
-                    server: '1234'
+                    name: nickName,
+                    server: server
                 })
             }).then(res => {
-                //const contentType = res.headers.get("content-type");
                 if (res.status == "201") {
-                    res.json().then(data => {
-                        setActiveUser(data);
-                        navigate("/ChattingPage");
-                    })
+                    // add new contact to our contact list by calling setContactList
+                    props.addContact();
+                    props.setTrigger(false);
                 } else {
-                    alert("Wrong password or userName.");
+                    alert("Can not add this contact");
                     document.getElementById('userName').value = "";
-                    document.getElementById('exampleInputPassword1').value = "";
+                    document.getElementById('nickName').value = "";
+                    document.getElementById('server').value = "";
                 }
             });
-
-
-
-
-        props.addContact(nickName);
-        props.setTrigger(false);
-        
     };
 
     const handleKeypress = e => {
@@ -55,7 +45,17 @@ function Popup(props) {
             <form>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Contact`s Name</label>
-                    <input type="text" id="userName" name="userName" onChange={onChange} onKeyPress={handleKeypress} className="form-controlPopUp"></input>
+                    <input type="text" id="userName" name="userName" onChange={onChange} className="form-controlPopUp"></input>
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label">Contact`s NickName</label>
+                    <input type="text" id="nickName" name="nickName" onChange={onChange} className="form-controlPopUp"></input>
+                </div>
+
+                <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label">Contact`s Server</label>
+                    <input type="text" id="server" name="server" onChange={onChange} onKeyPress={handleKeypress} className="form-controlPopUp"></input>
                 </div>
                 <button type="button" className="btn btn-light" onClick={onSubmit} >Add </button>&nbsp;&nbsp;
                 <button type="button" className="btn btn-light" onClick={() => props.setTrigger(false)}>close</button>

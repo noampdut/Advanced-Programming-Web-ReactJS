@@ -25,22 +25,6 @@ function ChatScreen({activeUser}) {
     const [index, setContactIndex] = useState(0);
     const [contactsList, setContactsList] = useState(activeUser.contacts);
 
-    // ######tring to connect to server######
-
-
-    //const [contactsList, setContactsList] = useState(null);
-   // const URLgetContacts = 'https://localhost:5001/api/contacts';
-
-   //  useEffect(() => {
-     //   axios.get(URLgetContacts)
-       //     .then(resopnse => {
-         //       setContactsList(resopnse.data)
-           // })
-
-    //}, [URLgetContacts])
-
-    /// ############# 
-
     
     const addMessage = text => {
         text = text.trim();
@@ -55,18 +39,16 @@ function ChatScreen({activeUser}) {
         }    
     };
 
-    const addContact = function (data) {
-        //if(!IsInContactList(user, contactsList)) {
-          //  if(activeUser.userName == user) { 
-          //      alert(user +", You can not create a new conversition with yourself.");
-           //      return;
-         //   }
-
-            setContactsList([{data}, ...contactsList]);
-        }
-   // }
-    
-    const onchange = function (e) {
+    const addContact = function () {
+        // GET method - recieve all contact list from active user. 
+        fetch('https://localhost:5001/api/contacts').then(res => {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                res.json().then(data => {
+                    setContactsList(data);
+                })
+            }
+        })
     }
 
     const changeContact = function (user, picture, lastMessage) {
@@ -141,7 +123,7 @@ function ChatScreen({activeUser}) {
                 <div className="bg-gray px-4 py-2 bg-light">
                     <p className="h5 mb-0 py-1">Contacts &nbsp;&nbsp;&nbsp;&nbsp;
                         <span>
-                            <AddContactButton addContact={addContact} onchange={onchange} />
+                            <AddContactButton addContact={addContact} />
                         </span>
                     </p>
                 </div>

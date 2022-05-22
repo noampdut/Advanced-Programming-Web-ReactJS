@@ -2,7 +2,7 @@ import './PopupWindow.css';
 import Popup from "./PopupWindow";
 import { useState } from "react";
 
-function AddContactButton({ addContact, onchange }) {
+function AddContactButton({ addContact }) {
     const [addContactButton, setAddContactButton] = useState(false);
 
     return (
@@ -10,7 +10,7 @@ function AddContactButton({ addContact, onchange }) {
             <button onClick={() => setAddContactButton(true)} ><img width="30" className="rounded-circle" src="2521826.png" /></button>
         </span>
             <>
-            <Popup addContact={addContact} onchange={onchange} trigger={addContactButton} setTrigger={setAddContactButton}></Popup></>
+            <Popup addContact={addContact} trigger={addContactButton} setTrigger={setAddContactButton}></Popup></>
 
         </>
 
