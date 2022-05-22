@@ -3,10 +3,24 @@ import {React} from 'react';
 
 function Input(props) {
     
-    const onClick = e =>{
-        e.preventDefault();
-        props.addMessage(document.getElementById("message").value);
-        document.getElementById("message").value = "";
+    const onClick = e => {
+        e.preventDefault();     
+        fetch('https://localhost:5001/api/contacts/' + props.user + '/messages?content=' + document.getElementById("message").value,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    content: document.getElementById('message').value,
+                })
+            }).then(res => {
+
+                if (res.status == "201") {
+                    props.addMessage(document.getElementById("message").value);
+                    document.getElementById("message").value = "";
+                } else {
+                    alert("Can not send message.");
+                }
+            });  
     };
 
     const handleKeypress = e => {

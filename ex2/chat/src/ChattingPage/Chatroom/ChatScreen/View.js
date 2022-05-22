@@ -22,7 +22,7 @@ function View (props) {
         return (
             <div>
             <CurrentUserChat user={props.currentContact} picture={props.currentPicture}/>
-             <Input setValue={props.setButtonPopUp} setValueVideo={props.setVideoPopUp} setValueRecord={props.setRecordPopUp} addMessage={props.addMessage} />
+                <Input setValue={props.setButtonPopUp} setValueVideo={props.setVideoPopUp} setValueRecord={props.setRecordPopUp} addMessage={props.addMessage} user={props.currentContact} />
              <ChatScrollBar>
                  <ShowMessages messages={props.messages} />
              </ChatScrollBar>

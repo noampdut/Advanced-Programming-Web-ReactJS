@@ -13,7 +13,7 @@ import axios from 'axios';
 
 
 function ChatScreen({activeUser}) {
-    const MessagesList = [{ id :'', 'content':"", 'created': "", 'sent': ""}] 
+    const MessagesList = [{'content':"", 'created': "", 'sent': ""}] 
                         //{'type':"text", 'data':"Hii, how are you?", 'getM':false, 'time':""},
                         //{'type':"text", 'data':"Great!", 'getM':true, 'time':""}]
     const [buttonPopUp, setButtonPopUp] = useState(false);
@@ -28,15 +28,33 @@ function ChatScreen({activeUser}) {
     
     const addMessage = text => {
         text = text.trim();
-        if (text != ""){
+        if (text != "") {
             let contact = contactsList[index];
-            let new_message = {'type':"text", 'data':text, 'getM':false, 'time':new Date()};
-            contact.lastMessage=text;
-            contact.time=new_message.time.toLocaleString();
-            contact.messages.push(new_message);
-            setContactsList(contactsList);
-            setMessage([...messages, new_message]);
-        }    
+            // let new_message = { 'content': text, 'created': new Date(), 'sent':false};
+            //contact.last = text;
+            //contact.lastDate = new_message.created.toLocaleString();
+            //contact.messages.push(new_message);
+            // setContactsList(contactsList);
+            //setMessage([...messages, new_message]);
+
+            fetch('https://localhost:5001/api/contacts/' + currentContactState.userName + '/messages').then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    res.json().then(data => {
+                        setMessage(data);
+                    })
+                }
+            })
+
+            fetch('https://localhost:5001/api/contacts').then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    res.json().then(data => {
+                        setContactsList(data);
+                    })
+                }
+            })
+        }
     };
 
     const addContact = function () {
@@ -51,7 +69,7 @@ function ChatScreen({activeUser}) {
         })
     }
 
-    const changeContact = function (user, picture, lastMessage) {
+    const changeContact = function (user, lastMessage) {
         let i = 0;
         for (; i < contactsList.length; i++) {
             if (contactsList[i].id == user) {

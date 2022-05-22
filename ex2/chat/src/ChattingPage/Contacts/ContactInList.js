@@ -4,7 +4,7 @@ const DATE_OPTIONS = { weekday: 'short', year: 'numeric', month: 'short', day: '
 function ContactInList({ id, lastDate, last, picture, changeContact }) {
     
     return (
-        <button type="button" onClick={() => changeContact(id, picture, last)} className="list-group-item list-group-item-action list-group-item-light rounded-0">
+        <button type="button" onClick={() => changeContact(id, last)} className="list-group-item list-group-item-action list-group-item-light rounded-0">
             <div className="media"><img src={'User-Profile.png'} alt="user" height="50" width="50" className="rounded-circle"></img>
                 <div className="media-body ml-4">
                     <div className="d-flex align-items-center justify-content-between mb-1">
