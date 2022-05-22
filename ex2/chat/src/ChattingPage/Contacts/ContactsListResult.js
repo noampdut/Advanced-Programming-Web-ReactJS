@@ -1,16 +1,27 @@
 import ContactInList from "./ContactInList";
 
 function ContactsListResult({ contactsList, changeContact }) {
-    const contactList = contactsList.map((data, key) => {
-        return <ContactInList {...data} changeContact={changeContact}  />
-    });
+    if (contactsList == null) {
+        return (
+            <div>
+                null list
+            </div>
+        );
+    } else {
 
-    return (
-        <div>
-            {contactList}
-        </div>
+        const contactList = contactsList.map((data, key) => {
+            return <ContactInList {...data} changeContact={changeContact} />
+        });
 
-    );
+        return (
+            <div>
+                {contactList}
+            </div>
+
+        );
+
+    }
+    
 
 }
 

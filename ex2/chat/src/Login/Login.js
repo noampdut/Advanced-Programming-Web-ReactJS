@@ -1,17 +1,87 @@
 import './login.css';
 import {useNavigate} from 'react-router-dom';
 import { userIdentification, getUserByUserName } from '../DataBase/dataBase';
+import axios from 'axios';
 
+function Login({ setActiveUser }) {
 
-function Login({setActiveUser}){
+    // const onsubmit = e => {
+    //   let user = document.getElementById('userName').value
+    // if (userIdentification(user ,document.getElementById('exampleInputPassword1').value)){
+    //   setActiveUser(getUserByUserName(user));
+    // navigate("/ChattingPage");
+    //}
+    //};
+    // const LOGIN_URL = '/Login';
+
+    //const postRequest = {
+    //    method: 'POST',
+    //    headers: { 'Content-Type': 'application/json' },
+    //    body: JSON.stringify({ userName = document.getElementById("userName").value, password = document.getElementById("password").value })
+    //};
 
     const onsubmit = e => {
-        let user = document.getElementById('userName').value
-        if (userIdentification(user ,document.getElementById('exampleInputPassword1').value)){
-            setActiveUser(getUserByUserName(user));
-            navigate("/ChattingPage");
-        }
+        e.preventDefault();
+
+        fetch('https://localhost:5001/api/Login?userName=' + document.getElementById('userName').value + '&password=' + document.getElementById('exampleInputPassword1').value,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    userName: document.getElementById('userName').value,
+                    password: document.getElementById('exampleInputPassword1').value
+                })
+            }).then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    res.json().then(data => {
+                        setActiveUser(data);
+                        navigate("/ChattingPage");
+                    })
+                } else {
+                    alert("Wrong password or userName.");
+                    document.getElementById('userName').value = "";
+                    document.getElementById('exampleInputPassword1').value = "";
+                }
+            }); fetch('https://localhost:5001/api/Login?userName=' + document.getElementById('userName').value + '&password=' + document.getElementById('exampleInputPassword1').value,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    userName: document.getElementById('userName').value,
+                    password: document.getElementById('exampleInputPassword1').value
+                })
+            }).then(res => {
+                const contentType = res.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    res.json().then(data => {
+                        setActiveUser(data);
+                        navigate("/ChattingPage");
+                    })
+                } else {
+                    alert("Wrong password or userName.");
+                    document.getElementById('userName').value = "";
+                    document.getElementById('exampleInputPassword1').value = "";
+                }
+            });
     };
+        //if (res.ok) {
+            //const data = res.json();
+            //console.log(data);
+           //     setActiveUser(data);
+           //     navigate("/ChattingPage");
+          //  }
+      //  })
+    //};
+         
+    
+   
+        //let user = document.getElementById('userName').value
+        //if (userIdentification(user, document.getElementById('exampleInputPassword1').value)) {
+          //  setActiveUser(getUserByUserName(user));
+            //navigate("/ChattingPage");
+        //}
+    //};
 
     const handleKeypress = e => {
         if (e.key === "Enter") {
@@ -42,7 +112,7 @@ function Login({setActiveUser}){
     </span>
     </div>
     );
-}
+};
 
 
 

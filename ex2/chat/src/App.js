@@ -6,7 +6,7 @@ import ChattingPage from './ChattingPage/ChattingPage';
 import { useState } from 'react';
 
 function App() {
-  const [activeUser, setActiveUser] = useState({ 'userName': '', 'nickName': '', 'picture': ''})
+    const [activeUser, setActiveUser] = useState({ 'userName': '', 'nickName': '', 'picture': '', 'contacts': {}})
 
   return (
     <BrowserRouter>
@@ -15,6 +15,7 @@ function App() {
           <Route path = '/Login' element={<Login setActiveUser={setActiveUser} />}></Route>
           <Route path = '/Register' element={<Register setActiveUser={setActiveUser}/>}></Route>
           <Route path = '/ChattingPage' element={<ChattingPage activeUser={activeUser}/>}></Route>
+
           
        </Routes>
     </BrowserRouter>

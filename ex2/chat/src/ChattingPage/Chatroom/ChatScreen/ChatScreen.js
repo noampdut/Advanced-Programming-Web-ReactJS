@@ -1,5 +1,5 @@
 import './chatScreen.css';
-import { useState, React } from 'react';
+import { useState, React, useEffect } from 'react';
 import AddContactButton from '../../Contacts/AddContactButton';
 import contacts from '../../Contacts/contacts';
 import { isInUserList } from '../../../DataBase/dataBase';
@@ -8,20 +8,38 @@ import { getPic } from '../../../DataBase/dataBase';
 import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
+import axios from 'axios';
+
 
 
 function ChatScreen({activeUser}) {
-    const MessagesList = [{'type':"text", 'data':"Hello!", 'getM':true, 'time':""}, 
-                        {'type':"text", 'data':"Hii, how are you?", 'getM':false, 'time':""},
-                        {'type':"text", 'data':"Great!", 'getM':true, 'time':""}]
+    const MessagesList = [{ id :'', 'content':"", 'created': "", 'sent': ""}] 
+                        //{'type':"text", 'data':"Hii, how are you?", 'getM':false, 'time':""},
+                        //{'type':"text", 'data':"Great!", 'getM':true, 'time':""}]
     const [buttonPopUp, setButtonPopUp] = useState(false);
     const [videoPopUp, setVideoPopUp] = useState(false);
     const [recordPopUp, setRecordPopUp] = useState(false);
     const [messages, setMessage] = useState(MessagesList);
     const [startScreen, setStartScreen] = useState(true);
-    const [currentContactState, setCurrentContact] = useState({userName:'', picture:''});
+    const [currentContactState, setCurrentContact] = useState({ userName: '', picture: 'User-Profile.png'});
     const [index, setContactIndex] = useState(0);
-    const [contactsList, setContactsList] = useState(contacts);
+    const [contactsList, setContactsList] = useState(activeUser.contacts);
+
+    // ######tring to connect to server######
+
+
+    //const [contactsList, setContactsList] = useState(null);
+   // const URLgetContacts = 'https://localhost:5001/api/contacts';
+
+   //  useEffect(() => {
+     //   axios.get(URLgetContacts)
+       //     .then(resopnse => {
+         //       setContactsList(resopnse.data)
+           // })
+
+    //}, [URLgetContacts])
+
+    /// ############# 
 
     
     const addMessage = text => {
@@ -37,30 +55,39 @@ function ChatScreen({activeUser}) {
         }    
     };
 
-    const addContact = function (user) {
-        if(isInUserList(user) && !IsInContactList(user, contactsList)) {
-            if(activeUser.userName == user) { 
-                alert(user +", You can not create a new conversition with yourself.");
-                 return;
-            }
-            setContactsList([{ userName: user, lastMessage: '', time: '', picture: getPic(user), messages: []}, ...contactsList]);
+    const addContact = function (data) {
+        //if(!IsInContactList(user, contactsList)) {
+          //  if(activeUser.userName == user) { 
+          //      alert(user +", You can not create a new conversition with yourself.");
+           //      return;
+         //   }
+
+            setContactsList([{data}, ...contactsList]);
         }
-    }
+   // }
     
     const onchange = function (e) {
     }
 
     const changeContact = function (user, picture, lastMessage) {
-        let i=0;
-        for(; i<contactsList.length; i++){
-            if(contactsList[i].userName == user){
+        let i = 0;
+        for (; i < contactsList.length; i++) {
+            if (contactsList[i].id == user) {
                 setContactIndex(i);
                 break;
             }
         }
         setStartScreen(false);
-        setCurrentContact({userName: user, picture: picture, lastMessage: lastMessage});
-        setMessage([...contactsList[i].messages]);
+        setCurrentContact({ userName: user, picture: 'User-Profile.png', lastMessage: lastMessage });
+        fetch('https://localhost:5001/api/contacts/' + user + '/messages').then(res => {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                res.json().then(data => {
+                    setMessage(data);
+                })
+                //setMessage([...contactsList[i].messages]);
+            }
+        })
     }
     const addImg = (file) => {
         var fr = new FileReader();
@@ -104,7 +131,7 @@ function ChatScreen({activeUser}) {
         <div className="py-5 px-4 ">
             <div className="px-0 mylist">
                 <a className="list-group-item list-group-item-action list-group-item-light rounded-0">
-                    <div className="media"><img width="60" height="60" src={activeUser.picture} alt="user" className="rounded-circle"></img>&nbsp;Hi {activeUser.userName}!
+                    <div className="media"><img width="60" height="60" src={'User-Profile.png'} alt="user" className="rounded-circle"></img>&nbsp;Hi {activeUser.userName}!
                         <div className="media-body ml-4">
                             <div className="d-flex align-items-center justify-content-between mb-1">
                             </div>
