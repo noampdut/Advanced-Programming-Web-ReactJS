@@ -1,10 +1,11 @@
 import './input.css';
-import {React} from 'react';
+import { React } from 'react';
 
 function Input(props) {
-    
+
     const onClick = e => {
-        e.preventDefault();     
+        e.preventDefault();
+        let message = document.getElementById("message").value;
         fetch('https://localhost:5001/api/contacts/' + props.user + '/messages?content=' + document.getElementById("message").value,
             {
                 method: 'POST',
@@ -15,18 +16,34 @@ function Input(props) {
             }).then(res => {
 
                 if (res.status == "201") {
-                    props.addMessage(document.getElementById("message").value);
+                    props.addMessage(message);
                     document.getElementById("message").value = "";
                 } else {
                     alert("Can not send message.");
                 }
-            });  
+            });
+
+        fetch('https://' + props.server + '/api/transfer?from=' + props.activeUser + '&to=' + props.user + '&content=' + message,
+            {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify({
+                    from: props.activeUser,
+                    to: props.user,
+                    content: message
+                })
+            }).then(res => {
+
+                if (res.status != "201") {
+                    alert("Can not send message to other contact.");
+                }
+            });
     };
 
     const handleKeypress = e => {
-      if (e.key === "Enter") {
-        onClick(e);
-      }
+        if (e.key === "Enter") {
+            onClick(e);
+        }
     };
 
     return (

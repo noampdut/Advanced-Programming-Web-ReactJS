@@ -8,20 +8,18 @@ import { getPic } from '../../../DataBase/dataBase';
 import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
-import axios from 'axios';
+import RateButton from '../../Contacts/RateButton';
 
 
 
 function ChatScreen({activeUser}) {
     const MessagesList = [{'content':"", 'created': "", 'sent': ""}] 
-                        //{'type':"text", 'data':"Hii, how are you?", 'getM':false, 'time':""},
-                        //{'type':"text", 'data':"Great!", 'getM':true, 'time':""}]
     const [buttonPopUp, setButtonPopUp] = useState(false);
     const [videoPopUp, setVideoPopUp] = useState(false);
     const [recordPopUp, setRecordPopUp] = useState(false);
     const [messages, setMessage] = useState(MessagesList);
     const [startScreen, setStartScreen] = useState(true);
-    const [currentContactState, setCurrentContact] = useState({ userName: '', picture: 'User-Profile.png'});
+    const [currentContactState, setCurrentContact] = useState({'id':"", 'name': "", 'server': "", 'last': "", 'lastDate':""});
     const [index, setContactIndex] = useState(0);
     const [contactsList, setContactsList] = useState(activeUser.contacts);
 
@@ -30,14 +28,8 @@ function ChatScreen({activeUser}) {
         text = text.trim();
         if (text != "") {
             let contact = contactsList[index];
-            // let new_message = { 'content': text, 'created': new Date(), 'sent':false};
-            //contact.last = text;
-            //contact.lastDate = new_message.created.toLocaleString();
-            //contact.messages.push(new_message);
-            // setContactsList(contactsList);
-            //setMessage([...messages, new_message]);
-
-            fetch('https://localhost:5001/api/contacts/' + currentContactState.userName + '/messages').then(res => {
+            
+            fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages').then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
@@ -69,16 +61,18 @@ function ChatScreen({activeUser}) {
         })
     }
 
-    const changeContact = function (user, lastMessage) {
+    const changeContact = function (user) {
         let i = 0;
         for (; i < contactsList.length; i++) {
             if (contactsList[i].id == user) {
+                //alert(contactsList.length);
+                //alert(contactsList[i].id);
                 setContactIndex(i);
                 break;
             }
         }
         setStartScreen(false);
-        setCurrentContact({ userName: user, picture: 'User-Profile.png', lastMessage: lastMessage });
+        setCurrentContact(contactsList[i]);
         fetch('https://localhost:5001/api/contacts/' + user + '/messages').then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -141,7 +135,10 @@ function ChatScreen({activeUser}) {
                 <div className="bg-gray px-4 py-2 bg-light">
                     <p className="h5 mb-0 py-1">Contacts &nbsp;&nbsp;&nbsp;&nbsp;
                         <span>
-                            <AddContactButton addContact={addContact} />
+                            <AddContactButton addContact={addContact} user={currentContactState.id} activeUser={activeUser.userName} />
+                        </span>
+                        <span>&nbsp;&nbsp;
+                            <RateButton/>
                         </span>
                     </p>
                 </div>
@@ -152,15 +149,18 @@ function ChatScreen({activeUser}) {
            
             <div className='chatBackground'>
                 <View startScreen={startScreen} setButtonPopUp={setButtonPopUp} setVideoPopUp={setVideoPopUp} setRecordPopUp={setRecordPopUp} messages={messages}
-                 buttonPopUp={buttonPopUp} 
-                 videoPopUp={videoPopUp} 
-                 addMessage={addMessage}
-                 addAudio={addAudio}
-                 addVideo={addVideo}
-                 addImg={addImg}
-                 currentContact={currentContactState.userName}
-                 currentPicture={currentContactState.picture}
-                 recordPopUp={recordPopUp}/>
+                    buttonPopUp={buttonPopUp}
+                    videoPopUp={videoPopUp}
+                    addMessage={addMessage}
+                    addAudio={addAudio}
+                    addVideo={addVideo}
+                    addImg={addImg}
+                    currentContact={currentContactState.id}
+                    currentPicture={'./User-Profile.png'}
+                    recordPopUp={recordPopUp}
+                    currentContactServer={currentContactState.server}
+                    activeUser={activeUser.userName}
+                />
             </div>
         </div>
     );

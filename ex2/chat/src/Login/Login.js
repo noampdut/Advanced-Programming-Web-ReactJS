@@ -8,7 +8,6 @@ function Login({ setActiveUser }) {
   
     const onsubmit = e => {
         e.preventDefault();
-
         fetch('https://localhost:5001/api/Login?userName=' + document.getElementById('userName').value + '&password=' + document.getElementById('exampleInputPassword1').value,
             {
                 method: 'POST',

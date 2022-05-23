@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 function App() {
     const [activeUser, setActiveUser] = useState({ 'userName': '', 'nickName': '', 'picture': '', 'contacts': {}})
-
+    //<Route path='/Rate' render={() => <Redirect to='http://localhost:5001/rates' />}/>
   return (
     <BrowserRouter>
        <Routes>
@@ -15,8 +15,8 @@ function App() {
           <Route path = '/Login' element={<Login setActiveUser={setActiveUser} />}></Route>
           <Route path = '/Register' element={<Register setActiveUser={setActiveUser}/>}></Route>
           <Route path = '/ChattingPage' element={<ChattingPage activeUser={activeUser}/>}></Route>
+         
 
-          
        </Routes>
     </BrowserRouter>
   );

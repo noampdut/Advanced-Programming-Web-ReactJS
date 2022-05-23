@@ -21,8 +21,8 @@ function View (props) {
     if (!(props.startScreen)){
         return (
             <div>
-            <CurrentUserChat user={props.currentContact} picture={props.currentPicture}/>
-                <Input setValue={props.setButtonPopUp} setValueVideo={props.setVideoPopUp} setValueRecord={props.setRecordPopUp} addMessage={props.addMessage} user={props.currentContact} />
+                <CurrentUserChat user={props.currentContact} picture={props.currentPicture} />
+                <Input setValue={props.setButtonPopUp} setValueVideo={props.setVideoPopUp} setValueRecord={props.setRecordPopUp} addMessage={props.addMessage} user={props.currentContact} server={props.currentContactServer} activeUser={props.activeUser} />
              <ChatScrollBar>
                  <ShowMessages messages={props.messages} />
              </ChatScrollBar>
