@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ex2",
+    "\\ex2\\chat",
+    "\\ex2\\chat\\src",
+    "\\ex2\\chat\\src\\ChattingPage",
+    "\\ex2\\chat\\src\\ChattingPage\\Chatroom",
+    "\\ex2\\chat\\src\\ChattingPage\\Chatroom\\ChatScreen",
+    "\\ex2\\chat\\src\\ChattingPage\\Contacts",
+    "\\ex2\\chat\\src\\DataBase",
+    "\\ex2\\chat\\src\\Register"
   ],
-  "SelectedNode": "\\C:\\Users\\noamp\\Documents\\GitHub\\Advanced-Programming-EX-2",
+  "SelectedNode": "\\ex2\\chat\\src\\ChattingPage\\Chatroom\\ChatScreen\\ChatScreen.js",
   "PreviewInSolutionExplorer": false
 }

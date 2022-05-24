@@ -9,7 +9,7 @@ import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
 import RateButton from '../../Contacts/RateButton';
-
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 
 function ChatScreen({activeUser}) {
@@ -23,7 +23,10 @@ function ChatScreen({activeUser}) {
     const [index, setContactIndex] = useState(0);
     const [contactsList, setContactsList] = useState(activeUser.contacts);
 
-    
+    var connection = new HubConnectionBuilder().withUrl("https://localhost:5001/MyHub").build();
+    connection.start();
+
+
     const addMessage = text => {
         text = text.trim();
         if (text != "") {
@@ -46,8 +49,32 @@ function ChatScreen({activeUser}) {
                     })
                 }
             })
+
+            connection.invoke("sendMessage", currentContactState.id);
+
         }
     };
+
+    connection.on("getNewMessage", function () {
+
+        fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages').then(res => {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                res.json().then(data => {
+                    setMessage(data);
+                })
+            }
+        })
+
+        fetch('https://localhost:5001/api/contacts').then(res => {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                res.json().then(data => {
+                    setContactsList(data);
+                })
+            }
+        })
+    })
 
     const addContact = function () {
         // GET method - recieve all contact list from active user. 
