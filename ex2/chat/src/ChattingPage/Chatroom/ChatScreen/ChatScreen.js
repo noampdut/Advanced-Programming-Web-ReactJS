@@ -5,7 +5,7 @@ import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
 import RateButton from '../../Contacts/RateButton';
-import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { HubConnectionBuilder } from '@microsoft/signalr';
 
 
 function ChatScreen({activeUser}) {
@@ -76,7 +76,7 @@ function ChatScreen({activeUser}) {
 
     const addContact = function () {
         // GET method - recieve all contact list from active user. 
-        fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
+        fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 res.json().then(data => {
