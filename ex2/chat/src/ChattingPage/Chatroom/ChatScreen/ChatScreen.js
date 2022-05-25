@@ -25,7 +25,7 @@ function ChatScreen({activeUser}) {
     .build();
 
     connection.start()
-            .then(result => {currentContactState
+            .then(result => {
                 connection.on("getNewMessage", function () {
                     fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages/' + activeUser.userName).then(res => {
                         const contentType = res.headers.get("content-type");
@@ -90,14 +90,26 @@ function ChatScreen({activeUser}) {
         let i = 0;
         for (; i < contactsList.length; i++) {
             if (contactsList[i].id == user) {
+
+                //alert("1"+ currentContactState.id);
                 //alert(contactsList.length);
                 //alert(contactsList[i].id);
-                setContactIndex(i);
+                //setContactIndex(i);
+               // alert(" i in for:" + i);
+                //alert("index in for:"+ index);
                 break;
             }
         }
+
         setStartScreen(false);
+
+        setContactIndex(i);
+        //alert(" i out of  for:" + i);
+       // alert("index out of  for:"+ index);
+
         setCurrentContact(contactsList[i]);
+        alert("4"+ currentContactState.id);
+
         fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages/' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {

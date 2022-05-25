@@ -28,23 +28,7 @@ function Login({ setActiveUser }) {
                 }
             }); 
     };
-        //if (res.ok) {
-            //const data = res.json();
-            //console.log(data);
-           //     setActiveUser(data);
-           //     navigate("/ChattingPage");
-          //  }
-      //  })
-    //};
-         
-    
-   
-        //let user = document.getElementById('userName').value
-        //if (userIdentification(user, document.getElementById('exampleInputPassword1').value)) {
-          //  setActiveUser(getUserByUserName(user));
-            //navigate("/ChattingPage");
-        //}
-    //};
+
 
     const handleKeypress = e => {
         if (e.key === "Enter") {
