@@ -27,11 +27,12 @@ function Popup(props) {
 
             });
         if (flag) {
-            fetch('https://localhost:5001/api/contacts/' +props.activeUser + '?id=' + userName + '&name=' + nickName + '&server=' + server,
+            fetch('https://localhost:5001/api/contacts?user=' +props.activeUser + '&id=' + userName + '&name=' + nickName + '&server=' + server,
                 {
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     body: JSON.stringify({
+                        user: props.activeUser,
                         id: userName,
                         name: nickName,
                         server: server

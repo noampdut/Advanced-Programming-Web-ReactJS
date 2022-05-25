@@ -1,7 +1,5 @@
 import './login.css';
 import {useNavigate} from 'react-router-dom';
-import { userIdentification, getUserByUserName } from '../DataBase/dataBase';
-import axios from 'axios';
 
 function Login({ setActiveUser }) {
 
