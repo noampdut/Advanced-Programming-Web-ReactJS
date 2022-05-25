@@ -52,6 +52,21 @@ function ChatScreen({activeUser}) {
                         })
                     
                 })
+
+                connection.on("newContactInList", function () {
+
+                    fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            res.json().then(data => {
+                                setContactsList(data);
+                            })
+                        }
+                    })
+
+                })
+
+
             })
             .catch(e => console.log('Connection failed: ', e));
 
@@ -84,6 +99,8 @@ function ChatScreen({activeUser}) {
     };
 
     const addContact = function () {
+
+        connection.invoke("addContact", currentContactState.id);
         // GET method - recieve all contact list from active user. 
         fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
