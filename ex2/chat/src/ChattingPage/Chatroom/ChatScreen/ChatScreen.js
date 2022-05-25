@@ -1,10 +1,6 @@
 import './chatScreen.css';
 import { useState, React, useEffect } from 'react';
 import AddContactButton from '../../Contacts/AddContactButton';
-import contacts from '../../Contacts/contacts';
-import { isInUserList } from '../../../DataBase/dataBase';
-import { IsInContactList } from '../../Contacts/contacts';
-import { getPic } from '../../../DataBase/dataBase';
 import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
@@ -23,16 +19,41 @@ function ChatScreen({activeUser}) {
     const [index, setContactIndex] = useState(0);
     const [contactsList, setContactsList] = useState(activeUser.contacts);
 
-    var connection = new HubConnectionBuilder().withUrl("https://localhost:5001/MyHub").build();
-    connection.start();
+    const connection = new HubConnectionBuilder()
+    .withUrl('https://localhost:5001/MyHub')
+    .withAutomaticReconnect()
+    .build();
 
+    connection.start()
+            .then(result => {
+                connection.on("getNewMessage", function () {
+                    fetch('https://localhost:5001/api/contacts/' +activeUser.userName + '/'+ currentContactState.id + '/messages').then(res => {
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            res.json().then(data => {
+                                setMessage(data);
+                            })
+                        }
+                    })
+            
+                    fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
+                        const contentType = res.headers.get("content-type");
+                        if (contentType && contentType.indexOf("application/json") !== -1) {
+                            res.json().then(data => {
+                                setContactsList(data);
+                            })
+                        }
+                    })
+                })
+            })
+            .catch(e => console.log('Connection failed: ', e));
 
     const addMessage = text => {
         text = text.trim();
         if (text != "") {
             let contact = contactsList[index];
             
-            fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages').then(res => {
+            fetch('https://localhost:5001/api/contacts/'+ activeUser.userName+'/' + currentContactState.id + '/messages').then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
@@ -41,7 +62,7 @@ function ChatScreen({activeUser}) {
                 }
             })
 
-            fetch('https://localhost:5001/api/contacts').then(res => {
+            fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
@@ -49,36 +70,13 @@ function ChatScreen({activeUser}) {
                     })
                 }
             })
-
             connection.invoke("sendMessage", currentContactState.id);
-
         }
     };
 
-    connection.on("getNewMessage", function () {
-
-        fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages').then(res => {
-            const contentType = res.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                res.json().then(data => {
-                    setMessage(data);
-                })
-            }
-        })
-
-        fetch('https://localhost:5001/api/contacts').then(res => {
-            const contentType = res.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                res.json().then(data => {
-                    setContactsList(data);
-                })
-            }
-        })
-    })
-
     const addContact = function () {
         // GET method - recieve all contact list from active user. 
-        fetch('https://localhost:5001/api/contacts').then(res => {
+        fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 res.json().then(data => {
@@ -100,7 +98,7 @@ function ChatScreen({activeUser}) {
         }
         setStartScreen(false);
         setCurrentContact(contactsList[i]);
-        fetch('https://localhost:5001/api/contacts/' + user + '/messages').then(res => {
+        fetch('https://localhost:5001/api/contacts/' + activeUser.userName + '/'+ user + '/messages').then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 res.json().then(data => {

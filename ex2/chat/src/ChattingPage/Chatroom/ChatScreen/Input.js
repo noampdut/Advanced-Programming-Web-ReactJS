@@ -6,7 +6,7 @@ function Input(props) {
     const onClick = e => {
         e.preventDefault();
         let message = document.getElementById("message").value;
-        fetch('https://localhost:5001/api/contacts/' + props.user + '/messages?content=' + document.getElementById("message").value,
+        fetch('https://localhost:5001/api/contacts/' + props.activeUser+ '/'+ props.user + '/messages?content=' + document.getElementById("message").value,
             {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
