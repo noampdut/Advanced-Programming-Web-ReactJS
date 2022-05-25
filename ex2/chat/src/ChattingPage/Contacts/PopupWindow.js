@@ -27,15 +27,15 @@ function Popup(props) {
 
             });
         if (flag) {
-            fetch('https://localhost:5001/api/contacts?user=' +props.activeUser + '&id=' + userName + '&name=' + nickName + '&server=' + server,
+            fetch('https://localhost:5001/api/contacts?id=' + userName + '&name=' + nickName + '&server=' + server + '&user=' + props.activeUser,
                 {
                     method: 'POST',
                     headers: { 'Content-type': 'application/json' },
                     body: JSON.stringify({
-                        user: props.activeUser,
                         id: userName,
                         name: nickName,
-                        server: server
+                        server: server,
+                        user: props.activeUser
                     })
                 }).then(res => {
                     if (res.status == "201") {
