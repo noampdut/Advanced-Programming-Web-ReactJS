@@ -6,7 +6,7 @@ function Input(props) {
     const onClick = e => {
         e.preventDefault();
         let message = document.getElementById("message").value;
-        fetch('https://localhost:5001/api/contacts/' + props.user + '/messages/' + props.activeUser + '?content=' + document.getElementById('message').value,
+        fetch('https://localhost:5001/api/contacts/' + props.activeUser + '/' + props.user + '/messages?content=' + document.getElementById('message').value,
             {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
@@ -14,6 +14,7 @@ function Input(props) {
                     content: document.getElementById('message').value,
                 })
             }).then(res => {
+               // alert("line 17 in input - post message done");
 
                 if (res.status == "201") {
                     props.addMessage(message);
@@ -33,7 +34,7 @@ function Input(props) {
                     content: message
                 })
             }).then(res => {
-
+                //alert("line 36 in input - trandfer done");
                 if (res.status != "201") {
                     alert("Can not send message to other contact.");
                 }

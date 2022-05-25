@@ -27,23 +27,30 @@ function ChatScreen({activeUser}) {
     connection.start()
             .then(result => {
                 connection.on("getNewMessage", function () {
-                    fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages/' + activeUser.userName).then(res => {
-                        const contentType = res.headers.get("content-type");
-                        if (contentType && contentType.indexOf("application/json") !== -1) {
-                            res.json().then(data => {
-                                setMessage(data);
-                            })
-                        }
-                    })
-            
-                    fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
-                        const contentType = res.headers.get("content-type");
-                        if (contentType && contentType.indexOf("application/json") !== -1) {
-                            res.json().then(data => {
-                                setContactsList(data);
-                            })
-                        }
-                    })
+                   
+                        fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages?user=' + activeUser.userName).then(res => {
+                            const contentType = res.headers.get("content-type");
+                            if (contentType && contentType.indexOf("application/json") !== -1) {
+                                res.json().then(data => {
+                                    //alert("cS line 34 got message list SIGNAL")
+                                    
+                                    setMessage(data);
+                                })
+                            }
+                        })
+                    
+                    
+                        fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
+                            const contentType = res.headers.get("content-type");
+                            if (contentType && contentType.indexOf("application/json") !== -1) {
+                                res.json().then(data => {
+                                    //alert("cS line 44 got contact list SIGNAL")
+                                   
+                                    setContactsList(data);
+                                })
+                            }
+                        })
+                    
                 })
             })
             .catch(e => console.log('Connection failed: ', e));
@@ -53,19 +60,21 @@ function ChatScreen({activeUser}) {
         if (text != "") {
             let contact = contactsList[index];
             
-            fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages/' + activeUser.userName).then(res => {
+            fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages?user=' + activeUser.userName).then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
+                        //alert("cS line 60 got message list");
                         setMessage(data);
                     })
                 }
             })
 
-            fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
+            fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
+                       // alert("cS line 70 got contacts list");
                         setContactsList(data);
                     })
                 }
@@ -76,7 +85,7 @@ function ChatScreen({activeUser}) {
 
     const addContact = function () {
         // GET method - recieve all contact list from active user. 
-        fetch('https://localhost:5001/api/contacts/' + activeUser.userName).then(res => {
+        fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 res.json().then(data => {
@@ -86,31 +95,36 @@ function ChatScreen({activeUser}) {
         })
     }
 
+
     const changeContact = function (user) {
         let i = 0;
+       // alert("0:" + contactsList[0].id);
+      //  alert("length" + contactsList.length);
+
         for (; i < contactsList.length; i++) {
             if (contactsList[i].id == user) {
-
-                //alert("1"+ currentContactState.id);
                 //alert(contactsList.length);
-                //alert(contactsList[i].id);
+               // alert(contactsList[i].id);
                 //setContactIndex(i);
-               // alert(" i in for:" + i);
-                //alert("index in for:"+ index);
                 break;
             }
+
         }
-
         setStartScreen(false);
+        if (contactsList.length != 1) {
+            //alert("conatct now : " + contactsList[i].id);
+            setCurrentContact(contactsList[i]);
+           // alert("conatct after set : " + contactsList[i].id);
+        }
+        else {
+            //alert("one contact");
+            setCurrentContact(contactsList[0]);
+        }
+        
+//alert("fetch for :" + contactsList[i].id);
+       /// alert('https://localhost:5001/api/contacts/' + contactsList[i].id + '/messages?user=' + activeUser.userName);
 
-        setContactIndex(i);
-        //alert(" i out of  for:" + i);
-       // alert("index out of  for:"+ index);
-
-        setCurrentContact(contactsList[i]);
-        alert("4"+ currentContactState.id);
-
-        fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages/' + activeUser.userName).then(res => {
+        fetch('https://localhost:5001/api/contacts/' + contactsList[i].id + '/messages?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 res.json().then(data => {
@@ -118,6 +132,7 @@ function ChatScreen({activeUser}) {
                 })
             }
         })
+
     }
     const addImg = (file) => {
         var fr = new FileReader();
