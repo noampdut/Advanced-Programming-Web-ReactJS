@@ -18,10 +18,8 @@ function Input(props) {
                     content: document.getElementById('message').value,
                 })
             }).then(res => {
-               // alert("line 17 in input - post message done");
 
                 if (res.status == "201") {
-                    //props.addMessage(message);
                     document.getElementById("message").value = "";
                 } else {
                     alert("Can not send message.");
@@ -38,7 +36,6 @@ function Input(props) {
                     content: message
                 })
             }).then(res => {
-                //alert("line 36 in input - trandfer done");
                 if (res.status != "201") {
                     alert("Can not send message to other contact.");
                 }

@@ -1,5 +1,7 @@
 import './login.css';
 import {useNavigate} from 'react-router-dom';
+import RateButton from './RateButton'
+
 
 function Login({ setActiveUser }) {
 
@@ -56,6 +58,9 @@ function Login({ setActiveUser }) {
     <span> Not registered?
         <button type="button" className="btn btn-link" onClick={() => navigate("/Register")} >click here </button>
     <span>to register</span>
+    <div>&nbsp;&nbsp;
+        <RateButton/>
+    </div>
     </span>
     </div>
     );

@@ -11,13 +11,37 @@ Here are some instructions and highlights regarding running the program and expl
 4. necessary libraries: react-router-dom by the command: *npm install react-router-dom*
 
 ## Running the program
-In the directory containing the files run the command: *npm start*
+First run the ASP.NET project
 
-The command runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-##### We created a system administrator in order to successfully operate the app in any situation.
-##### this admin is already signed to our chat, in order to login with this user, in the login Page [http://localhost:3000/Login](http://localhost:3000/Login) enter: 
-##### user name: *noampdut* & password: *n123456*
-##### * Any other user will register first on our registration page.
+(The first link)
+Next run the react project:
+
+In the *chat* directory run the command: *npm start*
+(The second link)
+
+
+The third link is for ex1 - the project of react  that not support the sever.
+
+## UserName and Password for the admin:
+Username: Admin
+
+Password:n123456
+
+If you want to register to the chat you should enter a username without spaces and password that contain letters and digits- 6 chars at least. 
+
+The server of the project(the api project) should be on 5001 port. 
+
+If you get in to the rates page there is not button to back to the chat.
+The entrance to rates page is from login page on the star button.
+
+More users that registered to the chat:
+Username: noampdut 
+Password: n123456
+
+Username:naama 
+Password:n123456
+
+Username: ofek 
+Password:n123456
 
 ### Thank you and enjoy! 

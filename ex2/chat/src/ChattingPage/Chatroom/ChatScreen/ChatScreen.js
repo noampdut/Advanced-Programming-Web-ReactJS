@@ -4,7 +4,6 @@ import AddContactButton from '../../Contacts/AddContactButton';
 import MessagesBox from '../../Contacts/MessagesBox';
 import MessageScrollBar from './MessageScrollBar';
 import View from './View';
-import RateButton from '../../Contacts/RateButton';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
 
@@ -44,7 +43,6 @@ function ChatScreen({activeUser}) {
                                 const contentType = res.headers.get("content-type");
                                 if (contentType && contentType.indexOf("application/json") !== -1) {
                                     res.json().then(data => {
-                                        //alert("cS line 44 got contact list SIGNAL")
                                        
                                         setContactsList(data);
                                     })
@@ -77,7 +75,6 @@ function ChatScreen({activeUser}) {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
-                        //alert("cS line 60 got message list");
                         setMessage(data);
                     })
                 }
@@ -87,19 +84,14 @@ function ChatScreen({activeUser}) {
                 const contentType = res.headers.get("content-type");
                 if (contentType && contentType.indexOf("application/json") !== -1) {
                     res.json().then(data => {
-                       // alert("cS line 70 got contacts list");
                         setContactsList(data);
                     })
                 }
             })
-            //connection.invoke("sendMessage", currentContactState.id);
         }
     };
 
     const addContact = function () {
-
-        //connection.invoke("addContact", currentContactState.id);
-        // GET method - recieve all contact list from active user. 
         fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -113,32 +105,20 @@ function ChatScreen({activeUser}) {
 
     const changeContact = function (user) {
         let i = 0;
-       // alert("0:" + contactsList[0].id);
-      //  alert("length" + contactsList.length);
-
         for (; i < contactsList.length; i++) {
             if (contactsList[i].id == user) {
-                //alert(contactsList.length);
-               // alert(contactsList[i].id);
-                //setContactIndex(i);
                 break;
             }
 
         }
         setStartScreen(false);
         if (contactsList.length != 1) {
-            //alert("conatct now : " + contactsList[i].id);
             setCurrentContact(contactsList[i]);
-           // alert("conatct after set : " + contactsList[i].id);
         }
         else {
-            //alert("one contact");
             setCurrentContact(contactsList[0]);
         }
         
-//alert("fetch for :" + contactsList[i].id);
-       /// alert('https://localhost:5001/api/contacts/' + contactsList[i].id + '/messages?user=' + activeUser.userName);
-
         fetch('https://localhost:5001/api/contacts/' + contactsList[i].id + '/messages?user=' + activeUser.userName).then(res => {
             const contentType = res.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -203,9 +183,7 @@ function ChatScreen({activeUser}) {
                         <span>
                             <AddContactButton addContact={addContact} user={currentContactState.id} activeUser={activeUser.userName} />
                         </span>
-                        <span>&nbsp;&nbsp;
-                            <RateButton activeUser={activeUser.userName} />
-                        </span>
+                        
                     </p>
                 </div>
                 <MessageScrollBar>

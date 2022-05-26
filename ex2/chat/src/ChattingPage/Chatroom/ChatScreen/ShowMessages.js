@@ -17,11 +17,7 @@ function messageS(str){
 
 function ShowMessages({messages}){
     return messages.map(message => {
-        if(!message.content)
-        {
-            console.log(messages);
-            console.log("why????");
-        }
+        
         if (message.sent == true) {
             return messageG(message.content.toString());
         } else {

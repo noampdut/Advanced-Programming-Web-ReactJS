@@ -110,10 +110,6 @@ function Register({setActiveUser}){
 
 
 function checkForm(userName, nickName, password, confirmPassword) {
-//if (isExists(userName)){
-//    alert("Username is already taken, please choose another username");
-//    return false;
-//}
 if(userName.length == 0 || nickName.length==0 || password.length==0 || confirmPassword.length==0) {
  alert("Please fill all the fields");
  return false;
@@ -127,7 +123,6 @@ if(confirmPassword != password) {
     alert("Invalid password verification.");
     return false;
 }
-    //alert("Created new user");
     return true;
 }
 
