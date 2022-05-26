@@ -28,19 +28,17 @@ function ChatScreen({activeUser}) {
         connection.start()
                 .then(result => {
                     connection.on("getNewMessage", function () {
-                            if (!currentContactState.id)
+                            if (currentContactState.id)
                             {
-                                return;
+                                fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages?user=' + activeUser.userName).then(res => {
+                                    const contentType = res.headers.get("content-type");
+                                    if (contentType && contentType.indexOf("application/json") !== -1) {
+                                        res.json().then(data => {                                        
+                                            setMessage(data);
+                                        })
+                                    }
+                                }).catch(e => console.log('fetch messages failed: ', e));
                             }
-                            fetch('https://localhost:5001/api/contacts/' + currentContactState.id + '/messages?user=' + activeUser.userName).then(res => {
-                                const contentType = res.headers.get("content-type");
-                                if (contentType && contentType.indexOf("application/json") !== -1) {
-                                    res.json().then(data => {                                        
-                                        setMessage(data);
-                                    })
-                                }
-                            }).catch(e => console.log('fetch messages failed: ', e));
-                        
                         
                             fetch('https://localhost:5001/api/contacts?user=' + activeUser.userName).then(res => {
                                 const contentType = res.headers.get("content-type");
