@@ -1,10 +1,7 @@
 import './register.css';
 import { useState } from "react";
 import validationPassword from './validation';
-import {insertNewUser,isExists} from '../DataBase/dataBase';
 import {useNavigate} from 'react-router-dom';
-import { getUserByUserName } from '../DataBase/dataBase';
-import contacts from '../ChattingPage/Contacts/contacts';
 
 
 

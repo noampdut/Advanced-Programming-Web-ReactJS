@@ -40,7 +40,7 @@ function Popup(props) {
                 }).then(res => {
                     if (res.status == "201") {
                         // add new contact to our contact list by calling setContactList
-                        props.addContact();
+                        //props.addContact();
                         props.setTrigger(false);
                     } else {
                         alert("Can not add this contact");

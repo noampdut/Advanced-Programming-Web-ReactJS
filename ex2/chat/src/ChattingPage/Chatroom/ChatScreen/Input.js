@@ -6,6 +6,10 @@ function Input(props) {
     const onClick = e => {
         e.preventDefault();
         let message = document.getElementById("message").value;
+        if (!message)
+        {
+            return;
+        }
         fetch('https://localhost:5001/api/contacts/' + props.activeUser + '/' + props.user + '/messages?content=' + document.getElementById('message').value,
             {
                 method: 'POST',
@@ -17,7 +21,7 @@ function Input(props) {
                // alert("line 17 in input - post message done");
 
                 if (res.status == "201") {
-                    props.addMessage(message);
+                    //props.addMessage(message);
                     document.getElementById("message").value = "";
                 } else {
                     alert("Can not send message.");

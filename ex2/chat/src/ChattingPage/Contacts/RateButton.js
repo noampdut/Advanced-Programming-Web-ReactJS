@@ -6,8 +6,6 @@ import React from 'react';
 function RateButton({activeUser}) {
 
     const onClick = e => {
-        alert('https://localhost:5001/Rates/Index?user=' + activeUser);
-        alert(activeUser);
         window.location.href = 'https://localhost:5001/Rates/Index/' + activeUser;
         
     }
