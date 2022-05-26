@@ -22,7 +22,7 @@ npm start
 The third link is for ex1 - the project of react  that not support the sever.
 
 ## UserName and Password for the admin:
-Username: Admin
+Username: admin
 
 Password:n123456
 
