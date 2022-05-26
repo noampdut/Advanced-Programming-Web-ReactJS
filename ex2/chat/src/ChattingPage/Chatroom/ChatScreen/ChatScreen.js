@@ -206,7 +206,7 @@ function ChatScreen({activeUser}) {
                             <AddContactButton addContact={addContact} user={currentContactState.id} activeUser={activeUser.userName} />
                         </span>
                         <span>&nbsp;&nbsp;
-                            <RateButton/>
+                            <RateButton activeUser={activeUser.userName} />
                         </span>
                     </p>
                 </div>

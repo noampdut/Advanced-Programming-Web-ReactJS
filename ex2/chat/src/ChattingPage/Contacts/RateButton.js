@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import React from 'react';
 
 
-function RateButton() {
+function RateButton({activeUser}) {
 
     const onClick = e => {
-        window.location.href = 'https://localhost:5001/Rates/Index';
+        alert('https://localhost:5001/Rates/Index?user=' + activeUser);
+        alert(activeUser);
+        window.location.href = 'https://localhost:5001/Rates/Index/' + activeUser;
+        
     }
 
 
