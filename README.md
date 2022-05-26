@@ -8,17 +8,16 @@ Here are some instructions and highlights regarding running the program and expl
 1. we use React.
 2. npm.
 3. node.js
-4. necessary libraries: react-router-dom by the command: *npm install react-router-dom*
 
 ## Running the program
-First run the ASP.NET project
+First run the ASP.NET project (The first link)
 
-(The first link)
-Next run the react project:
-
-In the *chat* directory run the command: *npm start*
-(The second link)
-
+Next run the react project (The second link):
+In the *ex2/chat* directory run the commands:
+```
+npm install
+npm start
+```
 
 The third link is for ex1 - the project of react  that not support the sever.
 
