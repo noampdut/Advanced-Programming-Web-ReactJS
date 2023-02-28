@@ -10,9 +10,9 @@ Here are some instructions and highlights regarding running the program and expl
 3. node.js
 
 ## Running the program
-First run the ASP.NET project (The first link)
+First run the ASP.NET project (The first link) : https://github.com/lilachlacham/Advanced-Programming-ex2-ASP.NET
 
-Next run the react project (The second link):
+Next run the react project (ex2/chat directory) 
 In the *ex2/chat* directory run the commands:
 ```
 npm install
