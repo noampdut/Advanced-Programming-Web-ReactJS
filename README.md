@@ -1,46 +1,48 @@
-# OUR CHAT PROJECT
-### By: Lilach Lacham And Noam Pdut. 
-Our semester project in the course Advanced Programming.
 
-Here are some instructions and highlights regarding running the program and explanations of the required installations.
+# Chat Project
 
-## Necessary installations:
-1. we use React.
-2. npm.
-3. node.js
+#### Advanced Project for the Advanced Programming course: Web Development
 
-## Running the program
-First run the ASP.NET project (The first link) : https://github.com/lilachlacham/Advanced-Programming-ex2-ASP.NET
+This document provides instructions and highlights regarding the installation and execution of our chat application, which supports both web and Android platforms.
 
-Next run the react project (ex2/chat directory) 
-In the *ex2/chat* directory run the commands:
-```
+## Prerequisites
+Ensure the following installations are completed before running the project:
+
+1. React
+2. npm
+3. Node.js
+
+## Running the Program
+
+### Step 1: Run the ASP.NET Project
+First, run the ASP.NET project available at the following link:
+[ASP.NET Project Repository](https://github.com/lilachlacham/Advanced-Programming-ex2-ASP.NET)
+
+### Step 2: Run the React Project
+Navigate to the `ex2/chat` directory and execute the following commands:
+
+```bash
 npm install
 npm start
 ```
 
-The third link is for ex1 - the project of react  that not support the sever.
+> Note: The server (API project) should run on port 5001.
 
-## UserName and Password for the admin:
-Username: admin
+### User Credentials
 
-Password:n123456
+#### Admin Account:
+- **Username:** admin
+- **Password:** n123456
 
-If you want to register to the chat you should enter a username without spaces and password that contain letters and digits- 6 chars at least. 
+#### Additional Registered Users:
+- **Username:** noampdut
+- **Password:** n123456
+- **Username:** naama
+- **Password:** n123456
+- **Username:** ofek
+- **Password:** n123456
 
-The server of the project(the api project) should be on 5001 port. 
+### Registration Instructions
+To register a new user, enter a username without spaces and a password that contains at least 6 characters, including both letters and digits.
 
-If you get in to the rates page there is not button to back to the chat.
-The entrance to rates page is from login page on the star button.
-
-More users that registered to the chat:
-Username: noampdut 
-Password: n123456
-
-Username:naama 
-Password:n123456
-
-Username: ofek 
-Password:n123456
-
-### Thank you and enjoy! 
+### Thank You and Enjoy!
