@@ -16,7 +16,7 @@ Ensure the following installations are completed before running the project:
 
 ### Step 1: Run the ASP.NET Project
 First, run the ASP.NET project available at the following link:
-[ASP.NET Project Repository](https://github.com/lilachlacham/Advanced-Programming-ex2-ASP.NET)
+[ASP.NET Project Repository](https://github.com/noampdut/Chat-Project-Server-Side-.NET-.git)
 
 ### Step 2: Run the React Project
 Navigate to the `ex2/chat` directory and execute the following commands:
